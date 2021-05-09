@@ -3,6 +3,7 @@
 
 	<head>
 		<title>120 Days of ChiVaxBot </title>
+			<meta charset="utf-8">
     	<link rel="stylesheet" href="assets/main.css" />
       <link rel="preconnect" href="https://fonts.gstatic.com">
       <!-- <link href="https://fonts.googleapis.com/css2?family=Contrail+One&family=Roboto&display=swap" rel="stylesheet"> -->
@@ -16,11 +17,10 @@
 			<p>
 				On January 25, South Side Weekly contributors Bea Malsy and Charmaine
 				Runes created a daily update Twitter bot to track who was dying and who
-				was fully vaccinated from COVID-19 in Chicago. What's changed four
-				months later?
+				was fully vaccinated from COVID-19 in Chicago.
 			</p>
 			<h2>
-				Let's take a look.
+				What's changed four months later?
 			</h2>
 		</section>
 
@@ -72,11 +72,16 @@
     const stepSel = container.selectAll('.step');
 
     function updateChart(index) {
-				console.log("Updating...")
+				console.log("Updating with", index )
         const sel = container.select(`[data-index='${index}']`);
-        const opacity = sel.attr('show-pcp');
+        const highlight = sel.attr('show-pcp');
         stepSel.classed('is-active', (d, i) => i === index);
-        container.select('#pcpZipLines').style("stroke-opacity", opacity);
+        // container.select('#pcpZipLines').style("stroke-opacity", opacity);
+				if (highlight == 1) {
+					container.select('#pcpZipLines').style("stroke", "#eab676");
+				} else {
+					container.select('#pcpZipLines').style("stroke", "#abdbe3");
+				}
     }
 
 		function init() {
@@ -85,7 +90,9 @@
             selector: stepSel.nodes(),
             offset: 0.5,
             enter: el => {
+								console.log(el, "entering view...")
                 const index = +d3.select(el).attr('data-index');
+								updateChart(index);
             },
             exit: el => {
                 let index = +d3.select(el).attr('data-index');
@@ -104,8 +111,6 @@
 
     let svg = d3.select("body")
         .select("svg")
-
-    // console.log(svg)
 
     const API_LINK = "https://data.cityofchicago.org/resource/553k-3xzc.json?$limit=10000"
   // const PCP_LINK = "https://data.cityofchicago.org/resource/2ns9-phjk.json?ccvi_category=HIGH"
@@ -185,9 +190,6 @@
       let highlights = d3.filter(grouped_data, d => pcpZipCodes.includes(d[0]))
       console.log(highlights)
 
-      // let zips = Array.from(grouped_data.keys())
-      // console.log(zips)
-
       let popup = d3.select(".pop-up");
       let timeParser = d3.timeParse("%d-%m-%Y");
 
@@ -255,47 +257,9 @@
             return line(d[1])
         })
         .style("fill", "none")
-        .style("stroke", "#eab676")
+        // .style("stroke", "#eab676")
         .style("stroke-width", "1.5px")
-				// .style("stroke-opacity", 1)
-
-      // let totalLength = line_path.node().getTotalLength();
-      // console.log(totalLength)
-
-      // line_path.on("mouseover", (event, d) => {
-			//
-      //   line_path
-      //     .style("stroke", "#abdbe3")
-      //     .style("stroke-width", 1)
-      //     .raise()
-			//
-      //   svg.select("line " + d[1].zip_code)
-      //     .style("stroke", "#063970")
-      //     .style("stroke-width", 3)
-      //     .raise()
-			//
-      //   console.log(d)
-			//
-      //   let lang = "In " + d[0] + ", " + "TK"
-			//
-      //   console.log(lang)
-			//
-      //   popup
-      //     .style("opacity", 1)
-      //     .style("left", (event.x) + "px")
-      //     .style("top", (event.y) + "px")
-      //     .html(lang)
-			//
-      // })
-			//
-      // line_path.on("mouseout", (event, d) => {
-      //   line_path
-      //     .style("stroke", "#abdbe3")
-      //     .style("stroke-width", 1)
-			//
-      //   popup
-      //     .style("opacity", 0)
-      // })
+				.style("stroke-opacity", 1)
 
       let baseline = svg.append("line")
         .attr("x1", margin.left)
@@ -306,91 +270,6 @@
         .style("stroke-width", "2px")
     })
 
-//     var gif = new GIF({
-//       workers: 3,
-//       quality: 1,
-//       repeat: 0
-//     })
-//
-//     gif.on("progress",function(p){
-//       drawFrame(p * duration);
-//       d3.select(".gif").text(d3.format("%")(p) + " rendered");
-//     });
-//
-//     gif.on("finished",function(blob){
-//       d3.select(".gif")
-//         .text("")
-//         .append("img")
-//           .attr("src",URL.createObjectURL(blob));
-//
-//       d3.timer(drawFrame);
-//     });
-//
-//     var q = queue(1);
-//
-//   // Queue up frames to add to gif stack
-//   d3.range(frames).forEach(function(f){
-//     q.defer(addFrame,f * duration / (frames - 1));
-//   });
-//
-//   // Once all frames are added
-//   q.awaitAll(function(){
-//
-//     // Show SVG as progress bar
-//     outer.style("display","block");
-//
-//     // Start web workers
-//     gif.render();
-//
-//   });
-//
-//   // Add a frame for time t
-//   function addFrame(t,cb) {
-//
-//     // Update SVG
-//     drawFrame(t);
-//
-//     // Create a blob URL from SVG
-//     // including "charset=utf-8" in the blob type breaks in Safari
-//     var img = new Image(),
-//         serialized = new XMLSerializer().serializeToString(outer.node()),
-//         svg = new Blob([serialized], {type: "image/svg+xml"}),
-//         url = URL.createObjectURL(svg);
-//
-//     // Onload, callback to move on to next frame
-//     img.onload = function(){
-//
-//       gif.addFrame(img, {
-//         delay: duration / frames,
-//         copy: true
-//       });
-//
-//       cb(null,t);
-//
-//
-//     };
-//
-//     img.src = url;
-//
-//   }
-//
-//   function drawFrame(t) {
-//
-//     // Need to catch 0% and 100%
-//     // Surely a smarter way to do this
-//     if (t > duration) {
-//       t = t % duration;
-//     }
-//
-//     var length = totalLength * t / duration;
-//
-//     path.attr("stroke-dasharray",length + " " + totalLength);
-//
-//   }
-//
-// });
-
 	</script>
-
 
 </html>

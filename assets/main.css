@@ -17,7 +17,7 @@ svg {
 }
 
 .spacer {
-    height: 1500px;
+    height: 500px;
 }
 
 .filler {
@@ -37,8 +37,8 @@ svg {
 
 .filler p {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 24px;
-    text-align: left;
+    font-size: 20px;
+    text-align: center;
     margin: 20px auto;
     line-height: 1.2;
     max-width: 600px
@@ -91,7 +91,6 @@ svg {
     background: #ffffff;
     margin: 0;
     top: 10vh;
-
     left: 0;
 }
 
@@ -105,8 +104,8 @@ svg {
     background-color: #fff;
 }
 
-#scrolly-overlay .scrolly figure.sticky .chart-container #pcpZipLines {
-    transition: stroke-opacity 0.5s ease-in-out;
+#scrolly-overlay .scrolly figure.sticky #pcpZipLines {
+    transition: stroke 250ms ease-in-out;
 }
 
 .x .tick line {
