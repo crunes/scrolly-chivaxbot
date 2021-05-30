@@ -2,274 +2,141 @@
 <html lang="en">
 
 	<head>
-		<title>120 Days of ChiVaxBot </title>
+		<title>ChiVaxBot Update</title>
 			<meta charset="utf-8">
-    	<link rel="stylesheet" href="assets/main.css" />
+    	<link rel="stylesheet" href="assets/styles/main.css" />
       <link rel="preconnect" href="https://fonts.gstatic.com">
-      <!-- <link href="https://fonts.googleapis.com/css2?family=Contrail+One&family=Roboto&display=swap" rel="stylesheet"> -->
+			<link href="https://fonts.googleapis.com/css2?family=Lusitana:wght@400;700&family=News+Cycle:wght@400;700&display=swap" rel="stylesheet">
       <script src="https://d3js.org/d3.v6.min.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
 			<script src="https://unpkg.com/enter-view@1.0.0/enter-view.min.js"></script>
-  </head>
+			<script src="https://unpkg.com/topojson@3"></script>
+	</head>
 
   <body>
 		<section class="filler">
-			<p>
-				On January 25, South Side Weekly contributors Bea Malsy and Charmaine
-				Runes created a daily update Twitter bot to track who was dying and who
-				was fully vaccinated from COVID-19 in Chicago.
-			</p>
-			<h2>
-				What's changed four months later?
+			<h2 class="hed">
+				New Maps, Same Gaps
 			</h2>
+			<h4>
+				Vaccination rates in communities especially vulnerable to COVID-19 have
+				increased since the launch of Protect Chicago Plus. But so has the gap
+				between those communities and the rest of the city.
+			</h4>
+			<p class="byline">
+				By Charmaine Runes, for South Side Weekly
+			</p>
+			<br>
+			<br>
+			<div class="spacer"></div>
 		</section>
 
 		<section id="scrolly-overlay">
-
 			<div class="scrolly">
-
 				<figure class="sticky">
 			    <div class="chart-container">
-						<h4>Vaccination rates by ZIP code</h4>
-			        <svg id="chart" width="1050px" height="1000px"></svg>
-							<!-- remove pop-up annotations for scrollytelling -->
-			        <!-- <div class="pop-up"></div> -->
+						<p class="axis-label">Vaccination rates by ZIP code</p>
+			        <svg id="line-chart" width="1050px" height="1000px"></svg>
 			    </div>
 				</figure>
-
 				<article>
-						<div class='step' show-pcp='0' data-index='0'>
+						<div class='step' data-index='0'>
 								<p>
-									On January 25, Mayor Lightfoot and the Chicago Department of
-									Public Health announced a vaccination campaign called Protect
-									Chicago Plus, prioritizing 15 community areas that were most
-									vulnerable to COVID-19 for doses.
+									As of May 25, 39 percent of Chicago residents had completed
+									their COVID-19 vaccine series.
 								</p>
 						</div>
-						<div class='step' show-pcp='1' data-index='1'>
+						<div class='step' data-index='1'>
+							<p>
+								But the gap between the average vaccination rate for Protect
+								Chicago Plus ZIP codes and that of the city has actually grown.
+							</p>
+						</div>
+						<div class='step' data-index='2'>
+							<p>
+								What's more, vaccine rates vary widely: from
+								<span style="color:#4d9221">92 percent</span> in the
+								Loop to <span style="color:#c51b7d">16 percent</span> in
+								Belmont-Cragin.
+							</p>
+						</div>
+						<div class='step' data-index='3'>
 								<p>
-									But four months later, the ZIP codes within these Protect
-									Chicago Plus community areas still lag far behind other parts
-									of the city in vaccination rates.
+									<span style="color:#c51b7d">Protect Chicago Plus community
+										areas</span>, in particular, still lag far behind other parts
+										of the city.
 								</p>
 						</div>
 				</article>
-
 			</div>
-
 		</section>
 
 		<section class='filler'>
         <div class="spacer"></div>
+				<p>
+					On January 25, Mayor Lightfoot and the Chicago Department of Public
+					Health (CDPH) announced an initiative called Protect Chicago Plus to
+					prioritize fifteen of the most vulnerable neighborhoods, mostly on the
+					South and West sides in Black and brown communities, for critical
+					COVID-19 vaccines.
+				</p>
+
+				<p>
+					That same day, South Side Weekly launched ChiVaxBot,
+					a daily Twitter bot highlighting the geographic disparities between who
+					was dying from COVID-19 and who was vaccinated. Even though the percent
+					of fully immune residents in several South and West Side ZIP codes rose,
+					the daily maps didn’t seem to change much.
+				</p>
+
+				<p>
+					After four months of reporting who’s dying from and who’s been vaccinated
+					for COVID-19, we’ve decided to update the bot to also illustrate change
+					over time. Starting TK, we will be threading a second daily tweet that
+					shows a GIF of the percent of fully vaccinated residents by ZIP code,
+					week by week.
+				</p>
+
+				<br>
+				<br>
+
+				<h4>Percent of residents with complete vaccine series, by ZIP code, in Chicago</h4>
+				<br>
+				<div class="grid">
+					<p class="chart-label">February 25, 2021</p>
+					<p class="chart-label">March 25, 2021</p>
+					<p class="chart-label">April 25, 2021</p>
+					<p class="chart-label">May 25, 2021</p>
+
+					<img src="assets/images/vaccinated-diverging/vaccinations_20210215.svg">
+					<img src="assets/images/vaccinated-diverging/vaccinations_20210315.svg">
+					<img src="assets/images/vaccinated-diverging/vaccinations_20210415.svg">
+					<img src="assets/images/vaccinated-diverging/vaccinations_20210515.svg">
+
+					<img src="assets/images/vaccinated-diverging/diverging_key_pct.svg" id="legend">
+					<img src="assets/images/vaccinated-diverging/diverging_key_pct.svg" id="legend">
+					<img src="assets/images/vaccinated-diverging/diverging_key_pct.svg" id="legend">
+					<img src="assets/images/vaccinated-diverging/diverging_key_pct.svg" id="legend">
+				</div>
+
+				<br>
+				<br>
+
+				<p>
+					The most important change will be that the GIF maps use the same key.
+					For example, one shade will always represent, say, 10 to 20 percent of
+					residents fully vaccinated, and another shade will always represent 20
+					to 30 percent of residents fully vaccinated, and so on. We hope that
+					this clarifies that vaccination rates are in fact improving, while
+					still keeping an eye on the disparities between the South and West
+					Sides and the rest of the city.
+				</p>
+
+				<div class="spacer"></div>
 		</section>
 
   </body>
 
-  <script>
-    // console.log({ d3 })
-
-		const container = d3.select('#scrolly-overlay');
-    const stepSel = container.selectAll('.step');
-
-    function updateChart(index) {
-				console.log("Updating with", index )
-        const sel = container.select(`[data-index='${index}']`);
-        const highlight = sel.attr('show-pcp');
-        stepSel.classed('is-active', (d, i) => i === index);
-        // container.select('#pcpZipLines').style("stroke-opacity", opacity);
-				if (highlight == 1) {
-					container.select('#pcpZipLines').style("stroke", "#eab676");
-				} else {
-					container.select('#pcpZipLines').style("stroke", "#abdbe3");
-				}
-    }
-
-		function init() {
-
-        enterView({
-            selector: stepSel.nodes(),
-            offset: 0.5,
-            enter: el => {
-								console.log(el, "entering view...")
-                const index = +d3.select(el).attr('data-index');
-								updateChart(index);
-            },
-            exit: el => {
-                let index = +d3.select(el).attr('data-index');
-                index = Math.max(0, index - 1);
-                updateChart(index);
-            }
-        });
-
-    }
-
-    init();
-
-    let width = 800;
-    let height = 500;
-    let margin = { top: 30, right: 10, bottom: 10, left: 30 };
-
-    let svg = d3.select("body")
-        .select("svg")
-
-    const API_LINK = "https://data.cityofchicago.org/resource/553k-3xzc.json?$limit=10000"
-  // const PCP_LINK = "https://data.cityofchicago.org/resource/2ns9-phjk.json?ccvi_category=HIGH"
-
-    d3.json(API_LINK).then(function (data) {
-
-      console.log(data)
-
-      data.forEach(row => {
-        row.date = new Date(row.date)
-        row._1st_dose_percent_population = +row.vaccine_series_completed_percent_population
-      });
-
-      let x = d3.scaleTime()
-          .domain(d3.extent(data.map(function (d) { return d.date }))) //d3 extent
-          .range([margin.left, width - margin.right])
-
-      let y = d3.scaleLinear()
-          .domain(d3.extent(data.map(function (d) { return d.vaccine_series_completed_percent_population })))
-          .range([height - margin.bottom, margin.top])
-
-      let yAxisSettings = d3.axisLeft(y)
-          .ticks(10)
-          .tickSize(-width)
-          .tickFormat(d3.format(".0%"))
-          .tickPadding(10)
-
-      let xAxisSettings = d3.axisBottom(x)
-          .ticks(6)
-          .tickSize(10)
-          .tickPadding(10)
-          .tickFormat(d3.timeFormat("%B"))
-
-      let bg = svg.append("rect")
-          .attr("x", margin.left)
-          .attr("y", 0)
-          .attr("width", width)
-          .attr("height", height)
-          .style("fill", "rgba(0, 0, 0, 0)")
-
-      let xAxisTicks = svg.append("g")
-          .attr("class", "x axis")
-          .call(xAxisSettings)
-          .attr("transform", `translate(0,${height - margin.bottom})`)
-
-      let yAxisTicks = svg.append("g")
-          .attr("class", "y axis")
-          .call(yAxisSettings)
-          .attr("transform", `translate(${margin.left},0)`)
-
-      let line = d3.line()
-          .defined(d => !isNaN(d.vaccine_series_completed_percent_population))
-          .x(d => x(d.date) )
-          .y(d => y(d._1st_dose_percent_population) )
-          .curve(d3.curveMonotoneX)
-
-      let grouped_data = d3.group(data, d => d.zip_code)
-      console.log(grouped_data)
-
-      let pcpZipCodes = [
-        "60636",
-        "60623",
-        "66029",
-        "60621",
-        "60644",
-        "60651",
-        "60632",
-        "60609",
-        "60707",
-        "60639",
-        "60624",
-        "60628",
-        "60620",
-        "60617"
-      ]
-
-      let highlights = d3.filter(grouped_data, d => pcpZipCodes.includes(d[0]))
-      console.log(highlights)
-
-      let popup = d3.select(".pop-up");
-      let timeParser = d3.timeParse("%d-%m-%Y");
-
-      let phase1bStart = timeParser("25-01-2021")
-      let phase1bEnd = timeParser("28-03-2021")
-
-      let phase1b = svg.append("rect")
-        .attr("x", x(phase1bStart))
-        .attr("y", margin.top)
-        .attr("width", x(phase1bEnd) - x(phase1bStart))
-        .attr("height", height - margin.bottom - margin.top)
-        .style("fill", "#eeeeee")
-        .style("opacity", "0.5")
-
-      let phase1bLabel = svg.append("text")
-        .attr("text-anchor", "left")
-        .attr("y", y(0.72))
-        .attr("x", x(phase1bStart) + 10)
-        .style("font-size", "18px")
-        .style("font-weight", "bold")
-        .style("fill", "#7e7e7e")
-        .text("Phase 1b")
-
-      let phase1c = svg.append("rect")
-        .attr("x", x(timeParser("29-03-2021")))
-        .attr("y", margin.top)
-        .attr("width", x(timeParser("19-04-2021")) - x(timeParser("29-03-2021")))
-        .attr("height", height - margin.bottom - margin.top)
-        .style("fill", "#eeeeee")
-        .style("opacity", "0.5")
-
-      let phase1cLabel = svg.append("text")
-        .attr("text-anchor", "left")
-        .attr("y", y(0.72))
-        .attr("x", x(timeParser("29-03-2021")) + 10)
-        .style("font-size", "18px")
-        .style("font-weight", "bold")
-        .style("fill", "#7e7e7e")
-        .text("Phase 1c")
-
-      let line_path = svg.append("g")
-        .selectAll(".line")
-        .data(grouped_data)
-        .join("path")
-        .attr("class", d => {
-            return "line " +  d[0]
-        })
-        .attr("d", d => {
-            return line(d[1])
-        })
-        .style("fill", "none")
-        .style("stroke", "#abdbe3")
-        .style("stroke-width", "1px")
-        .style("stroke-opacity", 1)
-
-      let pcpZipLines = svg.append("g")
-				.attr("id", "pcpZipLines")
-        .selectAll(".line")
-        .data(highlights)
-        .join("path")
-        .attr("class", d => {
-            return "line " +  d[0]
-        })
-        .attr("d", d => {
-            return line(d[1])
-        })
-        .style("fill", "none")
-        // .style("stroke", "#eab676")
-        .style("stroke-width", "1.5px")
-				.style("stroke-opacity", 1)
-
-      let baseline = svg.append("line")
-        .attr("x1", margin.left)
-        .attr("x2", width + margin.left)
-        .attr("y1", y(0))
-        .attr("y2", y(0))
-        .style("stroke", "black")
-        .style("stroke-width", "2px")
-    })
-
-	</script>
+  <script src="scripts/scrolly.js"></script>
 
 </html>
