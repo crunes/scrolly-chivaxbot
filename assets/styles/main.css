@@ -26,15 +26,15 @@ svg {
 }
 
 .filler {
-    height: 15rem;
-    text-align: center;
+  text-align: center;
 }
 
-.filler h2 {
-    font-family: 'Lusitana', serif;
-    font-weight: 400;
-    font-size: 48px;
-    margin-bottom: 0;
+.filler h2, #hed {
+  font-family: 'Lusitana', serif;
+  font-weight: 400;
+  font-size: 48px;
+  margin-bottom: 0;
+  text-align: center;
 }
 
 .filler h4 {
@@ -73,6 +73,10 @@ img {
   width: 80%;
 }
 
+hr {
+  color: #eee;
+}
+
 p.axis-label {
   font-family: 'News Cycle', sans-serif;
   font-size: 18px;
@@ -81,6 +85,11 @@ p.axis-label {
 }
 
 p.byline {
+  text-align: center;
+}
+
+p.dek {
+  color: #888;
   text-align: center;
 }
 
@@ -135,9 +144,6 @@ p.chart-label {
     margin: 0;
     top: 5vh;
     left: 0;
-}
-
-#scrolly-overlay .scrolly figure.sticky #pcpZipLines {
     transition: stroke 50ms ease-in-out;
 }
 

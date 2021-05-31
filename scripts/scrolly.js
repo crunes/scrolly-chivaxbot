@@ -6,21 +6,34 @@ function updateChart(index) {
     const sel = container.select(`[data-index='${index}']`);
     stepSel.classed('is-active', (d, i) => i === index);
 
-    if (index == "0") {
+    if (index == "-1") {
+      container.select('#citywide').style("stroke-opacity", 0);
+      container.select('#averages').style("stroke-opacity", 0);
+      container.select("#cityLabel").style("opacity", 0);
+      container.select("#pcpAvgLabel").style("opacity", 0);
+      container.select("#nonPcpAvgLabel").style("opacity", 0);
+      container.select('#zips').style("stroke-opacity", 0);
+      container.select("#loopLabel").style("opacity", 0);
+      container.select("#belmontCraginLabel").style("opacity", 0);
+      container.select('#pcpZipLines').style("stroke-opacity", 1);
+
+    } else if (index == "0") {
       container.select('#citywide').style("stroke-opacity", 1);
       container.select('#averages').style("stroke-opacity", 0);
       container.select("#cityLabel").style("opacity", 1);
       container.select("#pcpAvgLabel").style("opacity", 0);
+      container.select("#nonPcpAvgLabel").style("opacity", 0);
       container.select('#zips').style("stroke-opacity", 0);
       container.select("#loopLabel").style("opacity", 0);
       container.select("#belmontCraginLabel").style("opacity", 0);
       container.select('#pcpZipLines').style("stroke-opacity", 0);
 
     } else if (index == "1") {
-      container.select('#citywide').style("stroke-opacity", 1);
+      container.select('#citywide').style("stroke-opacity", 0);
       container.select('#averages').style("stroke-opacity", 1);
-      container.select("#cityLabel").style("opacity", 1);
+      container.select("#cityLabel").style("opacity", 0);
       container.select("#pcpAvgLabel").style("opacity", 1);
+      container.select("#nonPcpAvgLabel").style("opacity", 1);
       container.select('#zips').style("stroke-opacity", 0);
       container.select("#loopLabel").style("opacity", 0);
       container.select("#belmontCraginLabel").style("opacity", 0);
@@ -31,6 +44,7 @@ function updateChart(index) {
       container.select('#averages').style("stroke-opacity", 0);
       container.select("#cityLabel").style("opacity", 0);
       container.select("#pcpAvgLabel").style("opacity", 0);
+      container.select("#nonPcpAvgLabel").style("opacity", 0);
       container.select('#zips').style("stroke-opacity", 0.5);
       container.select("#loopLabel").style("opacity", 1);
       container.select("#belmontCraginLabel").style("opacity", 1);
@@ -41,6 +55,7 @@ function updateChart(index) {
       container.select('#averages').style("stroke-opacity", 0);
       container.select("#cityLabel").style("opacity", 0);
       container.select("#pcpAvgLabel").style("opacity", 0);
+      container.select("#nonPcpAvgLabel").style("opacity", 0);
       container.select('#zips').style("stroke-opacity", 0);
       container.select("#loopLabel").style("opacity", 0);
       container.select("#belmontCraginLabel").style("opacity", 0);
@@ -49,6 +64,7 @@ function updateChart(index) {
 }
 
 function init() {
+
     enterView({
         selector: stepSel.nodes(),
         offset: 0.5,
@@ -64,6 +80,7 @@ function init() {
         }
     });
 }
+
 
 init();
 
@@ -90,7 +107,7 @@ d3.csv('data/vax_rates.csv')
     })
 
     let x = d3.scaleTime()
-        .domain(d3.extent(data.map(function (d) { return d.date }))) //d3 extent
+        .domain(d3.extent(data.map(function (d) { return d.date })))
         .range([margin.left, width - margin.right])
 
     let y = d3.scaleLinear()
@@ -135,7 +152,7 @@ d3.csv('data/vax_rates.csv')
     let grouped_data = d3.group(data, d => d.zip_code)
     console.log(grouped_data)
 
-    let avgGeographies = ["Citywide", "Protect Chicago Plus"]
+    let avgGeographies = ["Citywide", "Protect Chicago Plus", "Non-Protect Chicago Plus"]
     let pcpZipCodes = [
       "60636",
       "60623",
@@ -158,12 +175,10 @@ d3.csv('data/vax_rates.csv')
     let zipOnly = d3.group(
                     data
                       .filter(function (d) {
-                        return (!avgGeographies.includes(d.zip_code) && d.zip_code != "Non-Protect Chicago Plus")
+                        return (!avgGeographies.includes(d.zip_code))
                       }),
                     d => d.zip_code)
     console.log(zipOnly)
-
-    // let timeParser = d3.timeParse("%d-%m-%Y");
 
     let city = svg.append("g")
       .attr("id", "citywide")
@@ -173,18 +188,18 @@ d3.csv('data/vax_rates.csv')
       .attr("class", d => "line " +  d[0])
       .attr("d", d => line(d[1]))
       .style("fill", "none")
-      .style("stroke", "#4d9221")
-      .style("stroke-width", "1px")
+      .style("stroke", "#161616")
+      .style("stroke-width", "2px")
 
     let cityLabel = svg.append("text")
-      .attr("text-anchor", "middle")
+      .attr("text-anchor", "left")
       .attr("id", "cityLabel")
-      .attr("x", 745)
-      .attr("y", 275)
-      .style("fill", "#4d9221")
+      .attr("x", 795)
+      .attr("y", 301)
+      .style("fill", "#161616")
       .style("font-size", "14px")
       .style("font-weight", "bold")
-      .text("Citywide average")
+      .text("Citywide")
 
     let pcpAvgLabel = svg.append("text")
       .attr("text-anchor", "middle")
@@ -194,7 +209,17 @@ d3.csv('data/vax_rates.csv')
       .style("fill", "#c51b7d")
       .style("font-size", "14px")
       .style("font-weight", "bold")
-      .text("Protect Chicago Plus average")
+      .text("Protect Chicago Plus")
+
+    let nonPcpAvgLabel = svg.append("text")
+      .attr("text-anchor", "middle")
+      .attr("id", "nonPcpAvgLabel")
+      .attr("x", 745)
+      .attr("y", 260)
+      .style("fill", "#4d9221")
+      .style("font-size", "14px")
+      .style("font-weight", "bold")
+      .text("Rest of the city")
 
     let avgLines = svg.append("g")
       .attr("id", "averages")
@@ -206,12 +231,20 @@ d3.csv('data/vax_rates.csv')
       .style("fill", "none")
       .style("stroke", function(d) {
         if (d[0] == "Citywide") {
+          return "#bbb"
+        } else if (d[0] == "Non-Protect Chicago Plus") {
           return "#4d9221"
-        } else if (d[0] == "Protect Chicago Plus") {
+        } else {
           return "#c51b7d"
         }
       })
-      .style("stroke-width", "1px")
+      .style("stroke-width", function(d) {
+        if (d[0] == "Citywide") {
+          return "1px"
+        } else {
+          return "2px"
+        }
+      })
 
     let zips = svg.append("g")
       .attr("id", "zips")
@@ -281,14 +314,14 @@ d3.csv('data/vax_rates.csv')
         }
       })
 
-
     let baseline = svg.append("line")
       .attr("x1", margin.left)
       .attr("x2", width + margin.left)
       .attr("y1", y(0))
       .attr("y2", y(0))
-      .style("stroke", "#333")
+      .style("stroke", "#aaa")
       .style("stroke-width", "2px")
 
+    updateChart("-1") // Remove most labels to start
 
   })
