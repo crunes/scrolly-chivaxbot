@@ -14,7 +14,7 @@ function updateChart(index) {
       container.select("#nonPcpAvgLabel").style("opacity", 0);
       container.select('#zips').style("stroke-opacity", 0);
       container.select("#loopLabel").style("opacity", 0);
-      container.select("#belmontCraginLabel").style("opacity", 0);
+      container.select("#englewoodLabel").style("opacity", 0);
       container.select('#pcpZipLines').style("stroke-opacity", 1);
 
     } else if (index == "0") {
@@ -25,40 +25,40 @@ function updateChart(index) {
       container.select("#nonPcpAvgLabel").style("opacity", 0);
       container.select('#zips').style("stroke-opacity", 0);
       container.select("#loopLabel").style("opacity", 0);
-      container.select("#belmontCraginLabel").style("opacity", 0);
+      container.select("#englewoodLabel").style("opacity", 0);
       container.select('#pcpZipLines').style("stroke-opacity", 0);
 
     } else if (index == "1") {
       container.select('#citywide').style("stroke-opacity", 0);
       container.select('#averages').style("stroke-opacity", 1);
-      container.select("#cityLabel").style("opacity", 0);
+      container.select("#cityLabel").style("opacity", 1);
       container.select("#pcpAvgLabel").style("opacity", 1);
       container.select("#nonPcpAvgLabel").style("opacity", 1);
       container.select('#zips').style("stroke-opacity", 0);
       container.select("#loopLabel").style("opacity", 0);
-      container.select("#belmontCraginLabel").style("opacity", 0);
+      container.select("#englewoodLabel").style("opacity", 0);
       container.select('#pcpZipLines').style("stroke-opacity", 0);
 
     } else if (index == "2") {
-      container.select('#citywide').style("stroke-opacity", 0);
+      container.select('#citywide').style("stroke-opacity", 1);
       container.select('#averages').style("stroke-opacity", 0);
-      container.select("#cityLabel").style("opacity", 0);
+      container.select("#cityLabel").style("opacity", 1);
       container.select("#pcpAvgLabel").style("opacity", 0);
       container.select("#nonPcpAvgLabel").style("opacity", 0);
       container.select('#zips').style("stroke-opacity", 0.5);
       container.select("#loopLabel").style("opacity", 1);
-      container.select("#belmontCraginLabel").style("opacity", 1);
+      container.select("#englewoodLabel").style("opacity", 1);
       container.select('#pcpZipLines').style("stroke-opacity", 0);
 
     } else {
-      container.select('#citywide').style("stroke-opacity", 0);
+      container.select('#citywide').style("stroke-opacity", 1);
       container.select('#averages').style("stroke-opacity", 0);
-      container.select("#cityLabel").style("opacity", 0);
+      container.select("#cityLabel").style("opacity", 1);
       container.select("#pcpAvgLabel").style("opacity", 0);
       container.select("#nonPcpAvgLabel").style("opacity", 0);
       container.select('#zips').style("stroke-opacity", 0);
       container.select("#loopLabel").style("opacity", 0);
-      container.select("#belmontCraginLabel").style("opacity", 0);
+      container.select("#englewoodLabel").style("opacity", 0);
       container.select('#pcpZipLines').style("stroke-opacity", 0.5);
     }
 }
@@ -195,7 +195,7 @@ d3.csv('data/vax_rates.csv')
       .attr("text-anchor", "left")
       .attr("id", "cityLabel")
       .attr("x", 795)
-      .attr("y", 301)
+      .attr("y", 290)
       .style("fill", "#161616")
       .style("font-size", "14px")
       .style("font-weight", "bold")
@@ -257,14 +257,14 @@ d3.csv('data/vax_rates.csv')
       .style("stroke", function(d) {
         if (d[0] == "60603") {
           return "#4d9221"
-        } else if (d[0] == "60624") {
+        } else if (d[0] == "60621") {
           return "#c51b7d"
         } else {
           return "#ccc"
         }
       })
       .style("stroke-width", function(d) {
-        if (d[0] == "60603" | d[0] == "60624") {
+        if (d[0] == "60603" | d[0] == "60621") {
           return "2px"
         } else {
           return "1px"
@@ -281,15 +281,15 @@ d3.csv('data/vax_rates.csv')
       .style("font-weight", "bold")
       .text("60603 (Loop)")
 
-    let belmontCraginLabel = svg.append("text")
+    let englewoodLabel = svg.append("text")
       .attr("text-anchor", "middle")
-      .attr("id", "belmontCraginLabel")
+      .attr("id", "englewoodLabel")
       .attr("x", 720)
       .attr("y", 425)
       .style("fill", "#c51b7d")
       .style("font-size", "14px")
       .style("font-weight", "bold")
-      .text("60624 (Belmont-Cragin)")
+      .text("60621 (Englewood)")
 
     let pcpZipLines = svg.append("g")
       .attr("id", "pcpZipLines")
